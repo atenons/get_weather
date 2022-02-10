@@ -5,12 +5,15 @@ import sys
 from configparser import ConfigParser
 
 
-BASE_URL = f"http://api.openweathermap.org/data/2.5/weather?"
-GEO_URL = f"http://api.openweathermap.org/geo/1.0/direct?"
+BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
+GEO_URL = "http://api.openweathermap.org/geo/1.0/direct?"
 
 
 def _get_api_key():
-    """Fetch api-key from api.ini file"""
+    """Fetch api-key from api.ini file.
+    Api.ini:
+    [openweather]
+    api_key = <API_KEY>"""
     config = ConfigParser()
     config.read("api.ini")
     return config["openweather"]["api_key"]
@@ -53,7 +56,7 @@ def get_weather(location, limit, lang, api_key=API_KEY, units="metric"):
 @click.option("--lang", "-l", default="RU", help="use your preffered language")
 def main(location, amount_of_locations, lang):
     """Weather tool that shows you the current weather in locations of your choice.
-    API-key for connect to OpenWeatherAPI required"""
+    API-key for connect to OpenWeatherAPI  is required."""
     weather = get_weather(location, amount_of_locations, lang)
     for loc in weather:
         print(
